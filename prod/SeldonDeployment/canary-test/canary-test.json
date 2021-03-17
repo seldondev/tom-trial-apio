@@ -1,0 +1,52 @@
+{
+    "kind": "SeldonDeployment",
+    "apiVersion": "machinelearning.seldon.io/v1",
+    "metadata": {
+        "name": "canary-test",
+        "namespace": "prod",
+        "creationTimestamp": null,
+        "labels": {
+            "fluentd": "true"
+        }
+    },
+    "spec": {
+        "name": "canary-test",
+        "predictors": [
+            {
+                "name": "default",
+                "graph": {
+                    "name": "canary-test-container",
+                    "implementation": "SKLEARN_SERVER",
+                    "modelUri": "gs://seldon-models/sklearn/iris",
+                    "logger": {
+                        "mode": "all"
+                    }
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2021-03-17T14:36:45Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "canary-test-container",
+                                    "resources": {}
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 100
+            }
+        ],
+        "annotations": {
+            "seldon.io/engine-seldon-log-messages-externally": "true"
+        },
+        "protocol": "seldon"
+    },
+    "status": {}
+}
