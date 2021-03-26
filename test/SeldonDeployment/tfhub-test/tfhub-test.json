@@ -1,0 +1,52 @@
+{
+    "kind": "SeldonDeployment",
+    "apiVersion": "machinelearning.seldon.io/v1",
+    "metadata": {
+        "name": "tfhub-test",
+        "namespace": "test",
+        "creationTimestamp": null,
+        "labels": {
+            "fluentd": "true"
+        }
+    },
+    "spec": {
+        "name": "tfhub-test",
+        "predictors": [
+            {
+                "name": "default",
+                "graph": {
+                    "name": "tfhub-test-container",
+                    "implementation": "TENSORFLOW_SERVER",
+                    "modelUri": "gs://tom-seldon-examples/tfhub/mnist-model/",
+                    "logger": {
+                        "mode": "all"
+                    }
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2021-03-26T11:56:37Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "tfhub-test-container",
+                                    "resources": {}
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 100
+            }
+        ],
+        "annotations": {
+            "seldon.io/engine-seldon-log-messages-externally": "true"
+        },
+        "protocol": "tensorflow"
+    },
+    "status": {}
+}
