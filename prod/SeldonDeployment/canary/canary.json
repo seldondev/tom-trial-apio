@@ -6,8 +6,101 @@
         "namespace": "prod",
         "creationTimestamp": null,
         "labels": {
+            "app.kubernetes.io/instance": "tom-trial-apio-prod",
             "fluentd": "true"
-        }
+        },
+        "managedFields": [
+            {
+                "manager": "argocd-application-controller",
+                "operation": "Update",
+                "apiVersion": "machinelearning.seldon.io/v1",
+                "time": "2021-03-31T09:51:13Z",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": {
+                    "f:metadata": {
+                        "f:annotations": {
+                            ".": {},
+                            "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                        },
+                        "f:labels": {
+                            ".": {},
+                            "f:app.kubernetes.io/instance": {},
+                            "f:fluentd": {}
+                        }
+                    },
+                    "f:spec": {
+                        ".": {},
+                        "f:annotations": {
+                            ".": {},
+                            "f:seldon.io/engine-seldon-log-messages-externally": {}
+                        },
+                        "f:name": {},
+                        "f:protocol": {}
+                    }
+                }
+            },
+            {
+                "manager": "manager",
+                "operation": "Update",
+                "apiVersion": "machinelearning.seldon.io/v1",
+                "time": "2021-03-31T09:51:42Z",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": {
+                    "f:spec": {
+                        "f:predictors": {}
+                    },
+                    "f:status": {
+                        ".": {},
+                        "f:address": {
+                            ".": {},
+                            "f:url": {}
+                        },
+                        "f:deploymentStatus": {
+                            ".": {},
+                            "f:canary-canary-0-canary-container": {
+                                ".": {},
+                                "f:availableReplicas": {},
+                                "f:replicas": {}
+                            },
+                            "f:canary-default-0-canary-container": {
+                                ".": {},
+                                "f:availableReplicas": {},
+                                "f:replicas": {}
+                            }
+                        },
+                        "f:replicas": {},
+                        "f:serviceStatus": {
+                            ".": {},
+                            "f:canary-canary": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            },
+                            "f:canary-canary-canary-container": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            },
+                            "f:canary-default": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            },
+                            "f:canary-default-canary-container": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            }
+                        },
+                        "f:state": {}
+                    }
+                }
+            }
+        ]
     },
     "spec": {
         "name": "canary",
@@ -30,7 +123,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-03-31T09:51:09Z"
+                            "creationTimestamp": "2021-03-31T10:13:07Z"
                         },
                         "spec": {
                             "containers": [
@@ -62,40 +155,7 @@
                     "version": "default"
                 },
                 "svcOrchSpec": {},
-                "traffic": 70
-            },
-            {
-                "name": "canary",
-                "graph": {
-                    "name": "canary-container",
-                    "implementation": "XGBOOST_SERVER",
-                    "modelUri": "gs://seldon-models/xgboost/iris",
-                    "logger": {
-                        "mode": "all"
-                    }
-                },
-                "componentSpecs": [
-                    {
-                        "metadata": {
-                            "creationTimestamp": "2021-03-31T09:51:08Z"
-                        },
-                        "spec": {
-                            "containers": [
-                                {
-                                    "name": "canary-container",
-                                    "resources": {}
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "replicas": 1,
-                "annotations": {
-                    "seldon.io/canary": "true"
-                },
-                "engineResources": {},
-                "svcOrchSpec": {},
-                "traffic": 30
+                "traffic": 100
             }
         ],
         "annotations": {
