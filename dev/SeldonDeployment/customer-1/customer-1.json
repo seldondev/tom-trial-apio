@@ -6,101 +6,8 @@
         "namespace": "dev",
         "creationTimestamp": null,
         "labels": {
-            "app.kubernetes.io/instance": "tom-trial-apio-dev",
             "fluentd": "true"
-        },
-        "managedFields": [
-            {
-                "manager": "argocd-application-controller",
-                "operation": "Update",
-                "apiVersion": "machinelearning.seldon.io/v1",
-                "time": "2021-04-06T15:33:23Z",
-                "fieldsType": "FieldsV1",
-                "fieldsV1": {
-                    "f:metadata": {
-                        "f:annotations": {
-                            ".": {},
-                            "f:kubectl.kubernetes.io/last-applied-configuration": {}
-                        },
-                        "f:labels": {
-                            ".": {},
-                            "f:app.kubernetes.io/instance": {},
-                            "f:fluentd": {}
-                        }
-                    },
-                    "f:spec": {
-                        ".": {},
-                        "f:annotations": {
-                            ".": {},
-                            "f:seldon.io/engine-seldon-log-messages-externally": {}
-                        },
-                        "f:name": {},
-                        "f:protocol": {}
-                    }
-                }
-            },
-            {
-                "manager": "manager",
-                "operation": "Update",
-                "apiVersion": "machinelearning.seldon.io/v1",
-                "time": "2021-04-06T15:33:52Z",
-                "fieldsType": "FieldsV1",
-                "fieldsV1": {
-                    "f:spec": {
-                        "f:predictors": {}
-                    },
-                    "f:status": {
-                        ".": {},
-                        "f:address": {
-                            ".": {},
-                            "f:url": {}
-                        },
-                        "f:deploymentStatus": {
-                            ".": {},
-                            "f:customer-1-canary-0-customer-1-container": {
-                                ".": {},
-                                "f:availableReplicas": {},
-                                "f:replicas": {}
-                            },
-                            "f:customer-1-default-0-customer-1-container": {
-                                ".": {},
-                                "f:availableReplicas": {},
-                                "f:replicas": {}
-                            }
-                        },
-                        "f:replicas": {},
-                        "f:serviceStatus": {
-                            ".": {},
-                            "f:customer-1-canary": {
-                                ".": {},
-                                "f:grpcEndpoint": {},
-                                "f:httpEndpoint": {},
-                                "f:svcName": {}
-                            },
-                            "f:customer-1-canary-customer-1-container": {
-                                ".": {},
-                                "f:grpcEndpoint": {},
-                                "f:httpEndpoint": {},
-                                "f:svcName": {}
-                            },
-                            "f:customer-1-default": {
-                                ".": {},
-                                "f:grpcEndpoint": {},
-                                "f:httpEndpoint": {},
-                                "f:svcName": {}
-                            },
-                            "f:customer-1-default-customer-1-container": {
-                                ".": {},
-                                "f:grpcEndpoint": {},
-                                "f:httpEndpoint": {},
-                                "f:svcName": {}
-                            }
-                        },
-                        "f:state": {}
-                    }
-                }
-            }
-        ]
+        }
     },
     "spec": {
         "name": "customer-1",
@@ -109,13 +16,8 @@
                 "name": "default",
                 "graph": {
                     "name": "customer-1-container",
-                    "type": "MODEL",
-                    "implementation": "XGBOOST_SERVER",
-                    "endpoint": {
-                        "service_host": "localhost",
-                        "service_port": 9000
-                    },
-                    "modelUri": "gs://seldon-models/xgboost/iris",
+                    "implementation": "SKLEARN_SERVER",
+                    "modelUri": "gs://seldon-models/sklearn/iris",
                     "logger": {
                         "mode": "all"
                     }
@@ -123,27 +25,35 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-04-06T15:35:18Z"
+                            "creationTimestamp": "2021-04-06T15:29:18Z"
                         },
                         "spec": {
                             "containers": [
                                 {
                                     "name": "customer-1-container",
-                                    "image": "seldonio/xgboostserver:1.5.0",
-                                    "ports": [
-                                        {
-                                            "name": "metrics",
-                                            "containerPort": 6000,
-                                            "protocol": "TCP"
+                                    "resources": {
+                                        "limits": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        },
+                                        "requests": {
+                                            "cpu": "100m",
+                                            "memory": "1Gi"
                                         }
-                                    ],
-                                    "resources": {},
-                                    "volumeMounts": [
-                                        {
-                                            "name": "seldon-podinfo",
-                                            "mountPath": "/etc/podinfo"
-                                        }
-                                    ]
+                                    }
+                                }
+                            ]
+                        },
+                        "hpaSpec": {
+                            "minReplicas": 1,
+                            "maxReplicas": 2,
+                            "metrics": [
+                                {
+                                    "type": "Resource",
+                                    "resource": {
+                                        "name": "cpu",
+                                        "targetAverageUtilization": 10
+                                    }
                                 }
                             ]
                         }
@@ -151,9 +61,6 @@
                 ],
                 "replicas": 1,
                 "engineResources": {},
-                "labels": {
-                    "version": "default"
-                },
                 "svcOrchSpec": {},
                 "traffic": 100
             }
