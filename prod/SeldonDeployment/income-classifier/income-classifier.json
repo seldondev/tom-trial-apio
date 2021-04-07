@@ -11,44 +11,12 @@
         },
         "managedFields": [
             {
-                "manager": "argocd-application-controller",
-                "operation": "Update",
-                "apiVersion": "machinelearning.seldon.io/v1",
-                "time": "2021-03-23T17:03:39Z",
-                "fieldsType": "FieldsV1",
-                "fieldsV1": {
-                    "f:metadata": {
-                        "f:annotations": {
-                            ".": {},
-                            "f:kubectl.kubernetes.io/last-applied-configuration": {}
-                        },
-                        "f:labels": {
-                            ".": {},
-                            "f:app.kubernetes.io/instance": {},
-                            "f:fluentd": {}
-                        }
-                    },
-                    "f:spec": {
-                        ".": {},
-                        "f:annotations": {
-                            ".": {},
-                            "f:seldon.io/engine-seldon-log-messages-externally": {}
-                        },
-                        "f:name": {},
-                        "f:protocol": {}
-                    }
-                }
-            },
-            {
                 "manager": "manager",
                 "operation": "Update",
                 "apiVersion": "machinelearning.seldon.io/v1",
                 "time": "2021-03-23T17:03:39Z",
                 "fieldsType": "FieldsV1",
                 "fieldsV1": {
-                    "f:spec": {
-                        "f:predictors": {}
-                    },
                     "f:status": {
                         ".": {},
                         "f:address": {
@@ -75,6 +43,36 @@
                         "f:state": {}
                     }
                 }
+            },
+            {
+                "manager": "argocd-application-controller",
+                "operation": "Update",
+                "apiVersion": "machinelearning.seldon.io/v1",
+                "time": "2021-04-07T11:43:44Z",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": {
+                    "f:metadata": {
+                        "f:annotations": {
+                            ".": {},
+                            "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                        },
+                        "f:labels": {
+                            ".": {},
+                            "f:app.kubernetes.io/instance": {},
+                            "f:fluentd": {}
+                        }
+                    },
+                    "f:spec": {
+                        ".": {},
+                        "f:annotations": {
+                            ".": {},
+                            "f:seldon.io/engine-seldon-log-messages-externally": {}
+                        },
+                        "f:name": {},
+                        "f:predictors": {},
+                        "f:protocol": {}
+                    }
+                }
             }
         ]
     },
@@ -99,7 +97,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-03-23T17:03:49Z"
+                            "creationTimestamp": "2021-04-07T11:44:03Z"
                         },
                         "spec": {
                             "containers": [
@@ -140,7 +138,21 @@
                     "version": "default"
                 },
                 "svcOrchSpec": {},
-                "traffic": 100
+                "traffic": 100,
+                "explainer": {
+                    "type": "AnchorTabular",
+                    "modelUri": "gs://seldon-models/sklearn/income/explainer-py36-0.5.2",
+                    "containerSpec": {
+                        "name": "",
+                        "resources": {}
+                    },
+                    "config": {
+                        "batch_size": "100",
+                        "delta": "0.1",
+                        "tau": "0.15",
+                        "threshold": "0.95"
+                    }
+                }
             }
         ],
         "annotations": {
