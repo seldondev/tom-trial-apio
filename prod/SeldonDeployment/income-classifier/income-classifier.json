@@ -97,7 +97,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-04-07T11:44:03Z"
+                            "creationTimestamp": "2021-04-08T17:25:01Z"
                         },
                         "spec": {
                             "containers": [
@@ -138,7 +138,15 @@
                     "version": "default"
                 },
                 "svcOrchSpec": {},
-                "traffic": 100
+                "traffic": 100,
+                "explainer": {
+                    "type": "AnchorTabular",
+                    "modelUri": "gs://seldon-models/sklearn/income/explainer-py36-0.5.2",
+                    "containerSpec": {
+                        "name": "",
+                        "resources": {}
+                    }
+                }
             }
         ],
         "annotations": {
