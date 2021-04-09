@@ -1,0 +1,63 @@
+{
+    "kind": "SeldonDeployment",
+    "apiVersion": "machinelearning.seldon.io/v1",
+    "metadata": {
+        "name": "transformer",
+        "namespace": "prod",
+        "creationTimestamp": null,
+        "labels": {
+            "fluentd": "true"
+        }
+    },
+    "spec": {
+        "name": "transformer",
+        "predictors": [
+            {
+                "name": "default",
+                "graph": {
+                    "name": "input-transformer",
+                    "children": [
+                        {
+                            "name": "transformer-container",
+                            "type": "MODEL",
+                            "logger": {
+                                "mode": "all"
+                            }
+                        }
+                    ],
+                    "type": "TRANSFORMER"
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2021-04-09T08:13:39Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "transformer-container",
+                                    "image": "seldonio/mock_classifier:1.7.0-dev",
+                                    "resources": {}
+                                },
+                                {
+                                    "name": "input-transformer",
+                                    "image": "tomfarrand/mean-transformer:0.1",
+                                    "resources": {}
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 100
+            }
+        ],
+        "annotations": {
+            "seldon.io/engine-seldon-log-messages-externally": "true"
+        },
+        "protocol": "seldon"
+    },
+    "status": {}
+}
