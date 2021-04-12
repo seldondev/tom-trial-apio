@@ -20,7 +20,7 @@
                     "endpoint": {
                         "type": "REST"
                     },
-                    "modelUri": "gs://tom-seldon-examples/xgboost",
+                    "modelUri": "gs://tom-seldon-examples/leit-workshop/tom",
                     "logger": {
                         "mode": "all"
                     }
@@ -28,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-04-12T10:42:53Z"
+                            "creationTimestamp": "2021-04-12T10:43:39Z"
                         },
                         "spec": {
                             "containers": [
