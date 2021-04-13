@@ -28,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-04-13T14:22:48Z"
+                            "creationTimestamp": "2021-04-13T14:25:03Z"
                         },
                         "spec": {
                             "containers": [
@@ -58,7 +58,12 @@
                     "modelUri": "gs://tom-seldon-examples/xgboost",
                     "containerSpec": {
                         "name": "",
-                        "resources": {}
+                        "resources": {
+                            "requests": {
+                                "cpu": "2",
+                                "memory": "6Gi"
+                            }
+                        }
                     }
                 }
             }
