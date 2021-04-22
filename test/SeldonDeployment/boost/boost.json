@@ -14,7 +14,7 @@
                 "manager": "argocd-application-controller",
                 "operation": "Update",
                 "apiVersion": "machinelearning.seldon.io/v1",
-                "time": "2021-04-22T10:45:37Z",
+                "time": "2021-04-22T11:24:43Z",
                 "fieldsType": "FieldsV1",
                 "fieldsV1": {
                     "f:metadata": {
@@ -43,7 +43,7 @@
                 "manager": "manager",
                 "operation": "Update",
                 "apiVersion": "machinelearning.seldon.io/v1",
-                "time": "2021-04-22T10:46:03Z",
+                "time": "2021-04-22T11:25:07Z",
                 "fieldsType": "FieldsV1",
                 "fieldsV1": {
                     "f:spec": {
@@ -61,6 +61,11 @@
                                 ".": {},
                                 "f:availableReplicas": {},
                                 "f:replicas": {}
+                            },
+                            "f:boost-default-explainer": {
+                                ".": {},
+                                "f:availableReplicas": {},
+                                "f:replicas": {}
                             }
                         },
                         "f:replicas": {},
@@ -75,6 +80,12 @@
                             "f:boost-default-boost-container": {
                                 ".": {},
                                 "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            },
+                            "f:boost-default-explainer": {
+                                ".": {},
+                                "f:explainerFor": {},
                                 "f:httpEndpoint": {},
                                 "f:svcName": {}
                             }
@@ -138,15 +149,7 @@
                     "version": "default"
                 },
                 "svcOrchSpec": {},
-                "traffic": 100,
-                "explainer": {
-                    "type": "AnchorTabular",
-                    "modelUri": "gs://tom-seldon-examples/workshops/retail/gradientboost",
-                    "containerSpec": {
-                        "name": "",
-                        "resources": {}
-                    }
-                }
+                "traffic": 100
             }
         ],
         "annotations": {
