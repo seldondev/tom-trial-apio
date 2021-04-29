@@ -20,7 +20,7 @@
                     "endpoint": {
                         "type": "REST"
                     },
-                    "modelUri": "gs://tom-seldon-examples/datareply-workshop/models/sean/lr",
+                    "modelUri": "gs://tom-seldon-examples/datareply-workshop/models/sgreaves/lr",
                     "logger": {
                         "mode": "all"
                     }
@@ -28,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-04-29T10:20:23Z"
+                            "creationTimestamp": "2021-04-29T10:21:43Z"
                         },
                         "spec": {
                             "containers": [
