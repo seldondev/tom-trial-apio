@@ -31,7 +31,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-04-30T14:24:01Z"
+                            "creationTimestamp": "2021-04-30T14:26:56Z"
                         },
                         "spec": {
                             "containers": [
@@ -72,49 +72,7 @@
                     "version": "default"
                 },
                 "svcOrchSpec": {},
-                "traffic": 90
-            },
-            {
-                "name": "canary",
-                "graph": {
-                    "name": "ramakant-seldon-test-container",
-                    "implementation": "TENSORFLOW_SERVER",
-                    "modelUri": "gs://tom-seldon-examples/datareply-workshop/models/r.agrawal/gb/model.joblib",
-                    "logger": {
-                        "mode": "all"
-                    }
-                },
-                "componentSpecs": [
-                    {
-                        "metadata": {
-                            "creationTimestamp": "2021-04-30T14:22:42Z"
-                        },
-                        "spec": {
-                            "containers": [
-                                {
-                                    "name": "ramakant-seldon-test-container",
-                                    "resources": {
-                                        "limits": {
-                                            "cpu": "1",
-                                            "memory": "1Gi"
-                                        },
-                                        "requests": {
-                                            "cpu": "100m",
-                                            "memory": "1Gi"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "replicas": 1,
-                "annotations": {
-                    "seldon.io/canary": "true"
-                },
-                "engineResources": {},
-                "svcOrchSpec": {},
-                "traffic": 10
+                "traffic": 100
             }
         ],
         "annotations": {
