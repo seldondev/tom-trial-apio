@@ -1,6 +1,6 @@
 {
     "kind": "SeldonDeployment",
-    "apiVersion": "machinelearning.seldon.io/v1",
+    "apiVersion": "machinelearning.seldon.io/v1alpha2",
     "metadata": {
         "name": "sahand-lr",
         "namespace": "test",
@@ -16,7 +16,10 @@
                 "name": "default",
                 "graph": {
                     "name": "sahand-lr-container",
-                    "implementation": "TENSORFLOW_SERVER",
+                    "implementation": "SKLEARN_SERVER",
+                    "endpoint": {
+                        "type": "REST"
+                    },
                     "modelUri": "gs://tom-seldon-examples/datareply-workshop/models/sahand/lr",
                     "logger": {
                         "mode": "all"
@@ -25,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-04-30T14:29:23Z"
+                            "creationTimestamp": "2021-04-30T14:35:46Z"
                         },
                         "spec": {
                             "containers": [
@@ -37,7 +40,7 @@
                                             "memory": "1Gi"
                                         },
                                         "requests": {
-                                            "cpu": "100m",
+                                            "cpu": "1",
                                             "memory": "1Gi"
                                         }
                                     }
@@ -48,11 +51,16 @@
                 ],
                 "replicas": 1,
                 "engineResources": {},
-                "labels": {
-                    "version": "default"
-                },
                 "svcOrchSpec": {},
-                "traffic": 100
+                "traffic": 100,
+                "explainer": {
+                    "type": "AnchorTabular",
+                    "modelUri": "gs://tom-seldon-examples/datareply-workshop/pretrained/lr",
+                    "containerSpec": {
+                        "name": "",
+                        "resources": {}
+                    }
+                }
             }
         ],
         "annotations": {
