@@ -1,0 +1,65 @@
+{
+    "kind": "SeldonDeployment",
+    "apiVersion": "machinelearning.seldon.io/v1alpha2",
+    "metadata": {
+        "name": "dyaraev-lr-model",
+        "namespace": "test",
+        "creationTimestamp": null,
+        "labels": {
+            "fluentd": "true"
+        }
+    },
+    "spec": {
+        "name": "dyaraev-lr-model",
+        "predictors": [
+            {
+                "name": "default",
+                "graph": {
+                    "name": "dyaraev-lr-model-container",
+                    "implementation": "SKLEARN_SERVER",
+                    "endpoint": {
+                        "type": "REST"
+                    },
+                    "modelUri": "gs://tom-seldon-examples/datareply-workshop/models/dyaraev/lr",
+                    "logger": {
+                        "mode": "all"
+                    }
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2021-04-30T14:10:13Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "dyaraev-lr-model-container",
+                                    "resources": {
+                                        "limits": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        },
+                                        "requests": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 100
+            }
+        ],
+        "annotations": {
+            "seldon.io/engine-seldon-log-messages-externally": "true"
+        },
+        "protocol": "seldon",
+        "transport": "rest"
+    },
+    "status": {}
+}
