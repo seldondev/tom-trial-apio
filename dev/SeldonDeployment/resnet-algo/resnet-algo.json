@@ -1,0 +1,73 @@
+{
+    "kind": "SeldonDeployment",
+    "apiVersion": "machinelearning.seldon.io/v1",
+    "metadata": {
+        "name": "resnet-algo",
+        "namespace": "dev",
+        "creationTimestamp": null,
+        "labels": {
+            "fluentd": "true"
+        }
+    },
+    "spec": {
+        "name": "resnet-algo",
+        "predictors": [
+            {
+                "name": "default",
+                "graph": {
+                    "name": "resnet-algo-container",
+                    "type": "MODEL",
+                    "parameters": [
+                        {
+                            "name": "API_KEY",
+                            "value": "simyu2r8tPayp5wSj5IM5o9iwNo1",
+                            "type": "STRING"
+                        },
+                        {
+                            "name": "ALGO_NAME",
+                            "value": "ferrantresearch/resnet32/0.16.0",
+                            "type": "STRING"
+                        }
+                    ],
+                    "logger": {
+                        "mode": "all"
+                    }
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2021-05-12T13:43:16Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "resnet-algo-container",
+                                    "image": "tomfarrand/algorithmia-client:0.9",
+                                    "resources": {
+                                        "limits": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        },
+                                        "requests": {
+                                            "cpu": "100m",
+                                            "memory": "1Gi"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 100
+            }
+        ],
+        "annotations": {
+            "seldon.io/engine-seldon-log-messages-externally": "true"
+        },
+        "protocol": "seldon"
+    },
+    "status": {}
+}
