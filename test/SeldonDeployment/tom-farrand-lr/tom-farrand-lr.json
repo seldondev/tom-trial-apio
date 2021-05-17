@@ -28,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-05-17T10:56:58Z"
+                            "creationTimestamp": "2021-05-17T11:03:32Z"
                         },
                         "spec": {
                             "containers": [
@@ -55,7 +55,7 @@
                 "traffic": 100,
                 "explainer": {
                     "type": "AnchorTabular",
-                    "modelUri": "gs://tom-seldon-examples/ford-workshop/tom-farrand/xgb/explainer.dill",
+                    "modelUri": "gs://tom-seldon-examples/ford-workshop/tom-farrand/lr",
                     "containerSpec": {
                         "name": "",
                         "resources": {}
