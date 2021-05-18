@@ -31,7 +31,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-05-18T12:08:35Z"
+                            "creationTimestamp": "2021-05-18T12:20:00Z"
                         },
                         "spec": {
                             "containers": [
@@ -79,7 +79,7 @@
                 "graph": {
                     "name": "krishna-lr-container",
                     "implementation": "XGBOOST_SERVER",
-                    "modelUri": "gs://tom-seldon-examples/mkrish31/lr",
+                    "modelUri": "gs://tom-seldon-examples/ford-workshop/mkrish31/lr",
                     "logger": {
                         "mode": "all"
                     }
@@ -87,7 +87,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-05-18T12:08:24Z"
+                            "creationTimestamp": "2021-05-18T12:19:57Z"
                         },
                         "spec": {
                             "containers": [
