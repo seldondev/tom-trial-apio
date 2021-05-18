@@ -6,8 +6,113 @@
         "namespace": "test",
         "creationTimestamp": null,
         "labels": {
+            "app.kubernetes.io/instance": "tom-trial-apio-test",
             "fluentd": "true"
-        }
+        },
+        "managedFields": [
+            {
+                "manager": "argocd-application-controller",
+                "operation": "Update",
+                "apiVersion": "machinelearning.seldon.io/v1alpha2",
+                "time": "2021-05-18T11:59:34Z",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": {
+                    "f:metadata": {
+                        "f:annotations": {},
+                        "f:labels": {
+                            ".": {},
+                            "f:app.kubernetes.io/instance": {},
+                            "f:fluentd": {}
+                        }
+                    },
+                    "f:spec": {
+                        ".": {},
+                        "f:annotations": {
+                            ".": {},
+                            "f:seldon.io/engine-seldon-log-messages-externally": {}
+                        },
+                        "f:name": {},
+                        "f:protocol": {},
+                        "f:transport": {}
+                    }
+                }
+            },
+            {
+                "manager": "manager",
+                "operation": "Update",
+                "apiVersion": "machinelearning.seldon.io/v1",
+                "time": "2021-05-18T12:09:33Z",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": {
+                    "f:status": {
+                        ".": {},
+                        "f:address": {
+                            ".": {},
+                            "f:url": {}
+                        },
+                        "f:deploymentStatus": {
+                            ".": {},
+                            "f:kush-lr-canary-0-kush-lr-container": {
+                                ".": {},
+                                "f:availableReplicas": {},
+                                "f:replicas": {}
+                            },
+                            "f:kush-lr-default-0-kush-lr-container": {
+                                ".": {},
+                                "f:availableReplicas": {},
+                                "f:replicas": {}
+                            }
+                        },
+                        "f:replicas": {},
+                        "f:serviceStatus": {
+                            ".": {},
+                            "f:kush-lr-canary": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            },
+                            "f:kush-lr-canary-kush-lr-container": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            },
+                            "f:kush-lr-default": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            },
+                            "f:kush-lr-default-kush-lr-container": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            }
+                        },
+                        "f:state": {}
+                    }
+                }
+            },
+            {
+                "manager": "argocd-application-controller",
+                "operation": "Update",
+                "apiVersion": "machinelearning.seldon.io/v1",
+                "time": "2021-05-18T12:10:01Z",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": {
+                    "f:metadata": {
+                        "f:annotations": {
+                            "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                        }
+                    },
+                    "f:spec": {
+                        "f:predictors": {}
+                    }
+                }
+            }
+        ]
     },
     "spec": {
         "name": "kush-lr",
@@ -17,13 +122,12 @@
                 "graph": {
                     "name": "kush-lr-container",
                     "type": "MODEL",
-                    "implementation": "SKLEARN_SERVER",
+                    "implementation": "XGBOOST_SERVER",
                     "endpoint": {
                         "service_host": "localhost",
-                        "service_port": 9000,
-                        "type": "REST"
+                        "service_port": 9000
                     },
-                    "modelUri": "gs://tom-seldon-examples/ford-workshop/kush/lr",
+                    "modelUri": "gs://tom-seldon-examples/ford-workshop/kush/xgb",
                     "logger": {
                         "mode": "all"
                     }
@@ -31,13 +135,13 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-05-18T12:08:32Z"
+                            "creationTimestamp": "2021-05-18T12:08:23Z"
                         },
                         "spec": {
                             "containers": [
                                 {
                                     "name": "kush-lr-container",
-                                    "image": "seldonio/sklearnserver:1.5.0",
+                                    "image": "seldonio/xgboostserver:1.5.0",
                                     "ports": [
                                         {
                                             "name": "metrics",
@@ -51,7 +155,7 @@
                                             "memory": "1Gi"
                                         },
                                         "requests": {
-                                            "cpu": "1",
+                                            "cpu": "100m",
                                             "memory": "1Gi"
                                         }
                                     },
@@ -72,49 +176,7 @@
                     "version": "default"
                 },
                 "svcOrchSpec": {},
-                "traffic": 90
-            },
-            {
-                "name": "canary",
-                "graph": {
-                    "name": "kush-lr-container",
-                    "implementation": "XGBOOST_SERVER",
-                    "modelUri": "gs://tom-seldon-examples/ford-workshop/kush/xgb",
-                    "logger": {
-                        "mode": "all"
-                    }
-                },
-                "componentSpecs": [
-                    {
-                        "metadata": {
-                            "creationTimestamp": "2021-05-18T12:08:23Z"
-                        },
-                        "spec": {
-                            "containers": [
-                                {
-                                    "name": "kush-lr-container",
-                                    "resources": {
-                                        "limits": {
-                                            "cpu": "1",
-                                            "memory": "1Gi"
-                                        },
-                                        "requests": {
-                                            "cpu": "100m",
-                                            "memory": "1Gi"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "replicas": 1,
-                "annotations": {
-                    "seldon.io/canary": "true"
-                },
-                "engineResources": {},
-                "svcOrchSpec": {},
-                "traffic": 10
+                "traffic": 100
             }
         ],
         "annotations": {
