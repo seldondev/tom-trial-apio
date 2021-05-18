@@ -31,7 +31,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-05-18T12:17:33Z"
+                            "creationTimestamp": "2021-05-18T12:25:48Z"
                         },
                         "spec": {
                             "containers": [
@@ -78,7 +78,7 @@
                 "name": "canary",
                 "graph": {
                     "name": "timdevries-lr-container",
-                    "implementation": "TENSORFLOW_SERVER",
+                    "implementation": "XGBOOST_SERVER",
                     "modelUri": "gs://tom-seldon-examples/ford-workshop/timdevries/xgb",
                     "logger": {
                         "mode": "all"
@@ -87,13 +87,22 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-05-18T12:17:30Z"
+                            "creationTimestamp": "2021-05-18T12:25:43Z"
                         },
                         "spec": {
                             "containers": [
                                 {
                                     "name": "timdevries-lr-container",
-                                    "resources": {}
+                                    "resources": {
+                                        "limits": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        },
+                                        "requests": {
+                                            "cpu": "100m",
+                                            "memory": "1Gi"
+                                        }
+                                    }
                                 }
                             ]
                         }
