@@ -31,7 +31,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-05-18T12:09:57Z"
+                            "creationTimestamp": "2021-05-18T12:08:37Z"
                         },
                         "spec": {
                             "containers": [
@@ -72,22 +72,14 @@
                     "version": "default"
                 },
                 "svcOrchSpec": {},
-                "traffic": 50,
-                "explainer": {
-                    "type": "AnchorTabular",
-                    "modelUri": "gs://tom-seldon-examples/ford-workshop/austin-denha/lr",
-                    "containerSpec": {
-                        "name": "",
-                        "resources": {}
-                    }
-                }
+                "traffic": 50
             },
             {
                 "name": "canary",
                 "graph": {
                     "name": "austin-denha-lr-container",
-                    "implementation": "TENSORFLOW_SERVER",
-                    "modelUri": "gs://tom-seldon-examples/ford-workshop/austin-denha/xgb",
+                    "implementation": "XGBOOST_SERVER",
+                    "modelUri": "gs://tom-seldon-examples/ford-workshop/austin-denha/lr",
                     "logger": {
                         "mode": "all"
                     }
@@ -95,13 +87,22 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-05-18T12:09:48Z"
+                            "creationTimestamp": "2021-05-18T12:08:28Z"
                         },
                         "spec": {
                             "containers": [
                                 {
                                     "name": "austin-denha-lr-container",
-                                    "resources": {}
+                                    "resources": {
+                                        "limits": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        },
+                                        "requests": {
+                                            "cpu": "100m",
+                                            "memory": "1Gi"
+                                        }
+                                    }
                                 }
                             ]
                         }
