@@ -14,14 +14,11 @@
                 "manager": "argocd-application-controller",
                 "operation": "Update",
                 "apiVersion": "machinelearning.seldon.io/v1alpha2",
-                "time": "2021-05-18T12:39:09Z",
+                "time": "2021-05-18T11:56:05Z",
                 "fieldsType": "FieldsV1",
                 "fieldsV1": {
                     "f:metadata": {
-                        "f:annotations": {
-                            ".": {},
-                            "f:kubectl.kubernetes.io/last-applied-configuration": {}
-                        },
+                        "f:annotations": {},
                         "f:labels": {
                             ".": {},
                             "f:app.kubernetes.io/instance": {},
@@ -44,12 +41,9 @@
                 "manager": "manager",
                 "operation": "Update",
                 "apiVersion": "machinelearning.seldon.io/v1",
-                "time": "2021-05-18T12:39:38Z",
+                "time": "2021-05-18T12:09:36Z",
                 "fieldsType": "FieldsV1",
                 "fieldsV1": {
-                    "f:spec": {
-                        "f:predictors": {}
-                    },
                     "f:status": {
                         ".": {},
                         "f:address": {
@@ -58,12 +52,12 @@
                         },
                         "f:deploymentStatus": {
                             ".": {},
-                            "f:tom-farrand-lr-default-0-tom-farrand-lr-container": {
+                            "f:tom-farrand-lr-canary-0-tom-farrand-lr-container": {
                                 ".": {},
                                 "f:availableReplicas": {},
                                 "f:replicas": {}
                             },
-                            "f:tom-farrand-lr-default-explainer": {
+                            "f:tom-farrand-lr-default-0-tom-farrand-lr-container": {
                                 ".": {},
                                 "f:availableReplicas": {},
                                 "f:replicas": {}
@@ -72,15 +66,21 @@
                         "f:replicas": {},
                         "f:serviceStatus": {
                             ".": {},
-                            "f:tom-farrand-lr-default": {
+                            "f:tom-farrand-lr-canary": {
                                 ".": {},
                                 "f:grpcEndpoint": {},
                                 "f:httpEndpoint": {},
                                 "f:svcName": {}
                             },
-                            "f:tom-farrand-lr-default-explainer": {
+                            "f:tom-farrand-lr-canary-tom-farrand-lr-container": {
                                 ".": {},
-                                "f:explainerFor": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            },
+                            "f:tom-farrand-lr-default": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
                                 "f:httpEndpoint": {},
                                 "f:svcName": {}
                             },
@@ -92,6 +92,23 @@
                             }
                         },
                         "f:state": {}
+                    }
+                }
+            },
+            {
+                "manager": "argocd-application-controller",
+                "operation": "Update",
+                "apiVersion": "machinelearning.seldon.io/v1",
+                "time": "2021-05-18T12:10:01Z",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": {
+                    "f:metadata": {
+                        "f:annotations": {
+                            "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                        }
+                    },
+                    "f:spec": {
+                        "f:predictors": {}
                     }
                 }
             }
@@ -119,7 +136,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-05-18T12:39:01Z"
+                            "creationTimestamp": "2021-05-18T12:40:50Z"
                         },
                         "spec": {
                             "containers": [
@@ -160,7 +177,85 @@
                     "version": "default"
                 },
                 "svcOrchSpec": {},
-                "traffic": 100
+                "traffic": 50,
+                "explainer": {
+                    "type": "AnchorTabular",
+                    "modelUri": "gs://tom-seldon-examples/xgboost/",
+                    "containerSpec": {
+                        "name": "",
+                        "resources": {}
+                    },
+                    "config": {
+                        "batch_size": "100",
+                        "delta": "0.1",
+                        "tau": "0.15",
+                        "threshold": "0.95"
+                    }
+                }
+            },
+            {
+                "name": "canary",
+                "graph": {
+                    "name": "tom-farrand-lr-container",
+                    "type": "MODEL",
+                    "implementation": "XGBOOST_SERVER",
+                    "endpoint": {
+                        "service_host": "localhost",
+                        "service_port": 9000
+                    },
+                    "modelUri": "gs://tom-seldon-examples/ford-workshop/tom-farrand/xgb",
+                    "logger": {
+                        "mode": "all"
+                    }
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2021-05-18T12:40:50Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "tom-farrand-lr-container",
+                                    "image": "seldonio/xgboostserver:1.5.0",
+                                    "ports": [
+                                        {
+                                            "name": "metrics",
+                                            "containerPort": 6000,
+                                            "protocol": "TCP"
+                                        }
+                                    ],
+                                    "resources": {
+                                        "limits": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        },
+                                        "requests": {
+                                            "cpu": "100m",
+                                            "memory": "1Gi"
+                                        }
+                                    },
+                                    "volumeMounts": [
+                                        {
+                                            "name": "seldon-podinfo",
+                                            "mountPath": "/etc/podinfo"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "annotations": {
+                    "seldon.io/canary": "true"
+                },
+                "engineResources": {},
+                "labels": {
+                    "version": "canary"
+                },
+                "svcOrchSpec": {},
+                "traffic": 50
             }
         ],
         "annotations": {
