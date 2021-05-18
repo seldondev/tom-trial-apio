@@ -28,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-05-17T11:03:32Z"
+                            "creationTimestamp": "2021-05-18T08:14:32Z"
                         },
                         "spec": {
                             "containers": [
@@ -52,15 +52,7 @@
                 "replicas": 1,
                 "engineResources": {},
                 "svcOrchSpec": {},
-                "traffic": 100,
-                "explainer": {
-                    "type": "AnchorTabular",
-                    "modelUri": "gs://tom-seldon-examples/ford-workshop/tom-farrand/lr",
-                    "containerSpec": {
-                        "name": "",
-                        "resources": {}
-                    }
-                }
+                "traffic": 100
             }
         ],
         "annotations": {
