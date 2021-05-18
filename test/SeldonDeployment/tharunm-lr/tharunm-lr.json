@@ -31,7 +31,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-05-18T11:57:26Z"
+                            "creationTimestamp": "2021-05-18T12:24:51Z"
                         },
                         "spec": {
                             "containers": [
@@ -72,7 +72,7 @@
                     "version": "default"
                 },
                 "svcOrchSpec": {},
-                "traffic": 90
+                "traffic": 50
             },
             {
                 "name": "canary",
@@ -87,7 +87,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-05-18T12:12:23Z"
+                            "creationTimestamp": "2021-05-18T12:24:46Z"
                         },
                         "spec": {
                             "containers": [
@@ -114,7 +114,7 @@
                 },
                 "engineResources": {},
                 "svcOrchSpec": {},
-                "traffic": 10
+                "traffic": 50
             }
         ],
         "annotations": {
