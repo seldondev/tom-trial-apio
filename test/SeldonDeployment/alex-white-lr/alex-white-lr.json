@@ -72,49 +72,7 @@
                     "version": "default"
                 },
                 "svcOrchSpec": {},
-                "traffic": 90
-            },
-            {
-                "name": "canary",
-                "graph": {
-                    "name": "alex-white-lr-container",
-                    "implementation": "TENSORFLOW_SERVER",
-                    "modelUri": "gs://tom-seldon-examples/ford-workshop/alex-white/xgb/",
-                    "logger": {
-                        "mode": "all"
-                    }
-                },
-                "componentSpecs": [
-                    {
-                        "metadata": {
-                            "creationTimestamp": "2021-05-18T12:20:01Z"
-                        },
-                        "spec": {
-                            "containers": [
-                                {
-                                    "name": "alex-white-lr-container",
-                                    "resources": {
-                                        "limits": {
-                                            "cpu": "1",
-                                            "memory": "1Gi"
-                                        },
-                                        "requests": {
-                                            "cpu": "100m",
-                                            "memory": "1Gi"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "replicas": 1,
-                "annotations": {
-                    "seldon.io/canary": "true"
-                },
-                "engineResources": {},
-                "svcOrchSpec": {},
-                "traffic": 10
+                "traffic": 100
             }
         ],
         "annotations": {
