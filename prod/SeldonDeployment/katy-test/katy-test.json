@@ -6,8 +6,94 @@
         "namespace": "prod",
         "creationTimestamp": null,
         "labels": {
+            "app.kubernetes.io/instance": "tom-trial-apio-prod",
             "fluentd": "true"
-        }
+        },
+        "managedFields": [
+            {
+                "manager": "argocd-application-controller",
+                "operation": "Update",
+                "apiVersion": "machinelearning.seldon.io/v1",
+                "time": "2021-05-25T08:22:52Z",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": {
+                    "f:metadata": {
+                        "f:annotations": {
+                            ".": {},
+                            "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                        },
+                        "f:labels": {
+                            ".": {},
+                            "f:app.kubernetes.io/instance": {},
+                            "f:fluentd": {}
+                        }
+                    },
+                    "f:spec": {
+                        ".": {},
+                        "f:annotations": {
+                            ".": {},
+                            "f:seldon.io/engine-seldon-log-messages-externally": {}
+                        },
+                        "f:name": {},
+                        "f:protocol": {}
+                    }
+                }
+            },
+            {
+                "manager": "manager",
+                "operation": "Update",
+                "apiVersion": "machinelearning.seldon.io/v1",
+                "time": "2021-05-25T08:22:52Z",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": {
+                    "f:spec": {
+                        "f:predictors": {}
+                    },
+                    "f:status": {
+                        ".": {},
+                        "f:address": {
+                            ".": {},
+                            "f:url": {}
+                        },
+                        "f:deploymentStatus": {
+                            ".": {},
+                            "f:katy-test-default-0-katy-test-container": {
+                                ".": {},
+                                "f:availableReplicas": {},
+                                "f:replicas": {}
+                            },
+                            "f:katy-test-shadow-0-katy-test-container": {
+                                ".": {},
+                                "f:replicas": {}
+                            }
+                        },
+                        "f:replicas": {},
+                        "f:serviceStatus": {
+                            ".": {},
+                            "f:katy-test-default": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            },
+                            "f:katy-test-default-katy-test-container": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            },
+                            "f:katy-test-shadow-katy-test-container": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            }
+                        },
+                        "f:state": {}
+                    }
+                }
+            }
+        ]
     },
     "spec": {
         "name": "katy-test",
@@ -17,12 +103,12 @@
                 "graph": {
                     "name": "katy-test-container",
                     "type": "MODEL",
-                    "implementation": "SKLEARN_SERVER",
+                    "implementation": "XGBOOST_SERVER",
                     "endpoint": {
                         "service_host": "localhost",
                         "service_port": 9000
                     },
-                    "modelUri": "gs://seldon-models/sklearn/iris",
+                    "modelUri": "gs://seldon-models/xgboost/iris",
                     "logger": {
                         "mode": "all"
                     }
@@ -30,13 +116,13 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-05-25T08:22:42Z"
+                            "creationTimestamp": "2021-05-25T08:23:49Z"
                         },
                         "spec": {
                             "containers": [
                                 {
                                     "name": "katy-test-container",
-                                    "image": "seldonio/sklearnserver:1.5.0",
+                                    "image": "seldonio/xgboostserver:1.5.0",
                                     "ports": [
                                         {
                                             "name": "metrics",
@@ -62,61 +148,6 @@
                                     ]
                                 }
                             ]
-                        },
-                        "hpaSpec": {
-                            "minReplicas": 1,
-                            "maxReplicas": 2,
-                            "metrics": [
-                                {
-                                    "type": "Resource",
-                                    "resource": {
-                                        "name": "cpu",
-                                        "targetAverageUtilization": 10
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "replicas": 1,
-                "engineResources": {},
-                "labels": {
-                    "version": "default"
-                },
-                "svcOrchSpec": {},
-                "traffic": 100
-            },
-            {
-                "name": "shadow",
-                "graph": {
-                    "name": "katy-test-container",
-                    "implementation": "XGBOOST_SERVER",
-                    "modelUri": "gs://seldon-models/xgboost/iris",
-                    "logger": {
-                        "mode": "all"
-                    }
-                },
-                "componentSpecs": [
-                    {
-                        "metadata": {
-                            "creationTimestamp": "2021-05-25T08:22:42Z"
-                        },
-                        "spec": {
-                            "containers": [
-                                {
-                                    "name": "katy-test-container",
-                                    "resources": {
-                                        "limits": {
-                                            "cpu": "1",
-                                            "memory": "1Gi"
-                                        },
-                                        "requests": {
-                                            "cpu": "100m",
-                                            "memory": "1Gi"
-                                        }
-                                    }
-                                }
-                            ]
                         }
                     }
                 ],
@@ -125,8 +156,11 @@
                     "seldon.io/canary": "false"
                 },
                 "engineResources": {},
+                "labels": {
+                    "version": "default"
+                },
                 "svcOrchSpec": {},
-                "shadow": true
+                "traffic": 100
             }
         ],
         "annotations": {
