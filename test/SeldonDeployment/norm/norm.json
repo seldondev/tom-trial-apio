@@ -1,0 +1,52 @@
+{
+    "kind": "SeldonDeployment",
+    "apiVersion": "machinelearning.seldon.io/v1",
+    "metadata": {
+        "name": "norm",
+        "namespace": "test",
+        "creationTimestamp": null,
+        "labels": {
+            "fluentd": "true"
+        }
+    },
+    "spec": {
+        "name": "norm",
+        "predictors": [
+            {
+                "name": "default",
+                "graph": {
+                    "name": "norm-container",
+                    "implementation": "SKLEARN_SERVER",
+                    "modelUri": "gs://seldon-models/sklearn/iris",
+                    "logger": {
+                        "mode": "all"
+                    }
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2021-05-28T13:22:14Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "norm-container",
+                                    "resources": {}
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 100
+            }
+        ],
+        "annotations": {
+            "seldon.io/engine-seldon-log-messages-externally": "true"
+        },
+        "protocol": "seldon"
+    },
+    "status": {}
+}
