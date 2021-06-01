@@ -28,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-06-01T15:18:44Z"
+                            "creationTimestamp": "2021-06-01T15:56:44Z"
                         },
                         "spec": {
                             "containers": [
@@ -52,7 +52,15 @@
                 "replicas": 1,
                 "engineResources": {},
                 "svcOrchSpec": {},
-                "traffic": 100
+                "traffic": 100,
+                "explainer": {
+                    "type": "AnchorTabular",
+                    "modelUri": "gs://tom-seldon-examples/deploy-workshop/sean-greaves/lr",
+                    "containerSpec": {
+                        "name": "",
+                        "resources": {}
+                    }
+                }
             }
         ],
         "annotations": {
