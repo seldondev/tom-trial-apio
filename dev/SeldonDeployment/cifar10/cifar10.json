@@ -14,7 +14,7 @@
                 "manager": "argocd-application-controller",
                 "operation": "Update",
                 "apiVersion": "machinelearning.seldon.io/v1",
-                "time": "2021-06-02T13:49:58Z",
+                "time": "2021-06-02T17:47:27Z",
                 "fieldsType": "FieldsV1",
                 "fieldsV1": {
                     "f:metadata": {
@@ -43,7 +43,7 @@
                 "manager": "manager",
                 "operation": "Update",
                 "apiVersion": "machinelearning.seldon.io/v1",
-                "time": "2021-06-02T13:50:30Z",
+                "time": "2021-06-02T17:47:50Z",
                 "fieldsType": "FieldsV1",
                 "fieldsV1": {
                     "f:spec": {
@@ -106,7 +106,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-06-02T13:51:22Z"
+                            "creationTimestamp": "2021-06-02T17:48:07Z"
                         },
                         "spec": {
                             "containers": [
@@ -146,7 +146,22 @@
                     "version": "default"
                 },
                 "svcOrchSpec": {},
-                "traffic": 100
+                "traffic": 100,
+                "explainer": {
+                    "type": "AnchorImages",
+                    "modelUri": "gs://seldon-models/tfserving/cifar10/explainer-py36-0.5.2",
+                    "containerSpec": {
+                        "name": "",
+                        "resources": {}
+                    },
+                    "config": {
+                        "batch_size": "100",
+                        "delta": "0.1",
+                        "p_sample": "0.5",
+                        "tau": "0.15",
+                        "threshold": "0.95"
+                    }
+                }
             }
         ],
         "annotations": {
