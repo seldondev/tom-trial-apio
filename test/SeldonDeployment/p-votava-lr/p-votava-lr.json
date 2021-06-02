@@ -1,6 +1,6 @@
 {
     "kind": "SeldonDeployment",
-    "apiVersion": "machinelearning.seldon.io/v1",
+    "apiVersion": "machinelearning.seldon.io/v1alpha2",
     "metadata": {
         "name": "p-votava-lr",
         "namespace": "test",
@@ -16,8 +16,11 @@
                 "name": "default",
                 "graph": {
                     "name": "p-votava-lr-container",
-                    "implementation": "XGBOOST_SERVER",
-                    "modelUri": "gs://tom-seldon-examples/deploy-workshop/p-votava/xgb",
+                    "implementation": "SKLEARN_SERVER",
+                    "endpoint": {
+                        "type": "REST"
+                    },
+                    "modelUri": "gs://tom-seldon-examples/deploy-workshop/p-votava/lr",
                     "logger": {
                         "mode": "all"
                     }
@@ -25,13 +28,22 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-06-02T16:42:04Z"
+                            "creationTimestamp": "2021-06-02T16:54:35Z"
                         },
                         "spec": {
                             "containers": [
                                 {
                                     "name": "p-votava-lr-container",
-                                    "resources": {}
+                                    "resources": {
+                                        "limits": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        },
+                                        "requests": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        }
+                                    }
                                 }
                             ]
                         }
@@ -39,11 +51,16 @@
                 ],
                 "replicas": 1,
                 "engineResources": {},
-                "labels": {
-                    "version": "default"
-                },
                 "svcOrchSpec": {},
-                "traffic": 100
+                "traffic": 100,
+                "explainer": {
+                    "type": "AnchorTabular",
+                    "modelUri": "gs://tom-seldon-examples/deploy-workshop/pretrained",
+                    "containerSpec": {
+                        "name": "",
+                        "resources": {}
+                    }
+                }
             }
         ],
         "annotations": {
