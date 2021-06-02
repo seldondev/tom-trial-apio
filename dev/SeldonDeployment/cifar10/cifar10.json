@@ -146,22 +146,7 @@
                     "version": "default"
                 },
                 "svcOrchSpec": {},
-                "traffic": 100,
-                "explainer": {
-                    "type": "AnchorImages",
-                    "modelUri": "gs://seldon-models/tfserving/cifar10/explainer-py36-0.5.2",
-                    "containerSpec": {
-                        "name": "",
-                        "resources": {}
-                    },
-                    "config": {
-                        "batch_size": "100",
-                        "delta": "0.1",
-                        "p_sample": "0.5",
-                        "tau": "0.15",
-                        "threshold": "0.95"
-                    }
-                }
+                "traffic": 100
             }
         ],
         "annotations": {
