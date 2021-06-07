@@ -15,12 +15,12 @@
             {
                 "name": "default",
                 "graph": {
-                    "name": "john-smith-xgb-container",
-                    "implementation": "XGBOOST_SERVER",
+                    "name": "john-smith-lr-container",
+                    "implementation": "SKLEARN_SERVER",
                     "endpoint": {
                         "type": "REST"
                     },
-                    "modelUri": "gs://tom-seldon-examples/deploy-workshop/john-smith/xgb",
+                    "modelUri": "gs://tom-seldon-examples/deploy-workshop/john-smith/lr",
                     "logger": {
                         "mode": "all"
                     }
@@ -28,12 +28,12 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-06-07T19:21:34Z"
+                            "creationTimestamp": "2021-06-07T19:18:19Z"
                         },
                         "spec": {
                             "containers": [
                                 {
-                                    "name": "john-smith-xgb-container",
+                                    "name": "john-smith-lr-container",
                                     "resources": {
                                         "limits": {
                                             "cpu": "1",
@@ -52,7 +52,34 @@
                 "replicas": 1,
                 "engineResources": {},
                 "svcOrchSpec": {},
-                "traffic": 100
+                "traffic": 70
+            },
+            {
+                "name": "canary",
+                "graph": {
+                    "name": "john-smith-xgb-container",
+                    "implementation": "XGBOOST_SERVER",
+                    "modelUri": "gs://tom-seldon-examples/deploy-workshop/john-smith/xgb"
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2021-06-07T19:18:19Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "john-smith-xgb-container",
+                                    "resources": {}
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 30
             }
         ],
         "annotations": {
