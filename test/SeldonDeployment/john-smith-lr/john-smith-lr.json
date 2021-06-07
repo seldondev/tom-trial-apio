@@ -28,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-06-07T18:35:46Z"
+                            "creationTimestamp": "2021-06-07T18:45:03Z"
                         },
                         "spec": {
                             "containers": [
@@ -59,18 +59,12 @@
                 "graph": {
                     "name": "john-smith-xgb-container",
                     "implementation": "XGBOOST_SERVER",
-                    "endpoint": {
-                        "type": "REST"
-                    },
-                    "modelUri": "gs://tom-seldon-examples/deploy-workshop/john-smith/xgb",
-                    "logger": {
-                        "mode": "all"
-                    }
+                    "modelUri": "gs://tom-seldon-examples/deploy-workshop/john-smith/xgb"
                 },
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-06-07T18:35:46Z"
+                            "creationTimestamp": "2021-06-07T18:45:03Z"
                         },
                         "spec": {
                             "containers": [
