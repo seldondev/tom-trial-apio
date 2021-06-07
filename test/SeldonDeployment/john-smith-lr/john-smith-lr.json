@@ -28,7 +28,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-06-07T18:30:05Z"
+                            "creationTimestamp": "2021-06-07T18:34:32Z"
                         },
                         "spec": {
                             "containers": [
@@ -70,12 +70,12 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-06-07T18:30:05Z"
+                            "creationTimestamp": "2021-06-07T18:34:32Z"
                         },
                         "spec": {
                             "containers": [
                                 {
-                                    "name": "john-smith-lr-container",
+                                    "name": "john-smith-xgb-container",
                                     "resources": {}
                                 }
                             ]
