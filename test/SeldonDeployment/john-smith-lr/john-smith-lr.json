@@ -1,13 +1,107 @@
 {
     "kind": "SeldonDeployment",
-    "apiVersion": "machinelearning.seldon.io/v1alpha2",
+    "apiVersion": "machinelearning.seldon.io/v1",
     "metadata": {
         "name": "john-smith-lr",
         "namespace": "test",
         "creationTimestamp": null,
         "labels": {
+            "app.kubernetes.io/instance": "tom-trial-apio-test",
             "fluentd": "true"
-        }
+        },
+        "managedFields": [
+            {
+                "manager": "argocd-application-controller",
+                "operation": "Update",
+                "apiVersion": "machinelearning.seldon.io/v1alpha2",
+                "time": "2021-06-07T19:23:26Z",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": {
+                    "f:metadata": {
+                        "f:annotations": {
+                            ".": {},
+                            "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                        },
+                        "f:labels": {
+                            ".": {},
+                            "f:app.kubernetes.io/instance": {},
+                            "f:fluentd": {}
+                        }
+                    },
+                    "f:spec": {
+                        ".": {},
+                        "f:annotations": {
+                            ".": {},
+                            "f:seldon.io/engine-seldon-log-messages-externally": {}
+                        },
+                        "f:name": {},
+                        "f:protocol": {},
+                        "f:transport": {}
+                    }
+                }
+            },
+            {
+                "manager": "manager",
+                "operation": "Update",
+                "apiVersion": "machinelearning.seldon.io/v1",
+                "time": "2021-06-07T19:23:27Z",
+                "fieldsType": "FieldsV1",
+                "fieldsV1": {
+                    "f:spec": {
+                        "f:predictors": {}
+                    },
+                    "f:status": {
+                        ".": {},
+                        "f:address": {
+                            ".": {},
+                            "f:url": {}
+                        },
+                        "f:deploymentStatus": {
+                            ".": {},
+                            "f:john-smith-lr-canary-0-john-smith-xgb-container": {
+                                ".": {},
+                                "f:availableReplicas": {},
+                                "f:replicas": {}
+                            },
+                            "f:john-smith-lr-default-0-john-smith-lr-container": {
+                                ".": {},
+                                "f:availableReplicas": {},
+                                "f:replicas": {}
+                            }
+                        },
+                        "f:replicas": {},
+                        "f:serviceStatus": {
+                            ".": {},
+                            "f:john-smith-lr-canary": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            },
+                            "f:john-smith-lr-canary-john-smith-xgb-container": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            },
+                            "f:john-smith-lr-default": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            },
+                            "f:john-smith-lr-default-john-smith-lr-container": {
+                                ".": {},
+                                "f:grpcEndpoint": {},
+                                "f:httpEndpoint": {},
+                                "f:svcName": {}
+                            }
+                        },
+                        "f:state": {}
+                    }
+                }
+            }
+        ]
     },
     "spec": {
         "name": "john-smith-lr",
@@ -15,62 +109,39 @@
             {
                 "name": "default",
                 "graph": {
-                    "name": "john-smith-lr-container",
-                    "implementation": "SKLEARN_SERVER",
-                    "endpoint": {
-                        "type": "REST"
-                    },
-                    "modelUri": "gs://tom-seldon-examples/deploy-workshop/john-smith/lr",
-                    "logger": {
-                        "mode": "all"
-                    }
-                },
-                "componentSpecs": [
-                    {
-                        "metadata": {
-                            "creationTimestamp": "2021-06-07T19:18:19Z"
-                        },
-                        "spec": {
-                            "containers": [
-                                {
-                                    "name": "john-smith-lr-container",
-                                    "resources": {
-                                        "limits": {
-                                            "cpu": "1",
-                                            "memory": "1Gi"
-                                        },
-                                        "requests": {
-                                            "cpu": "1",
-                                            "memory": "1Gi"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                ],
-                "replicas": 1,
-                "engineResources": {},
-                "svcOrchSpec": {},
-                "traffic": 70
-            },
-            {
-                "name": "canary",
-                "graph": {
                     "name": "john-smith-xgb-container",
+                    "type": "MODEL",
                     "implementation": "XGBOOST_SERVER",
+                    "endpoint": {
+                        "service_host": "localhost",
+                        "service_port": 9001
+                    },
                     "modelUri": "gs://tom-seldon-examples/deploy-workshop/john-smith/xgb"
                 },
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-06-07T19:18:19Z"
+                            "creationTimestamp": "2021-06-07T19:24:15Z"
                         },
                         "spec": {
                             "containers": [
                                 {
                                     "name": "john-smith-xgb-container",
-                                    "resources": {}
+                                    "image": "seldonio/xgboostserver:1.5.0",
+                                    "ports": [
+                                        {
+                                            "name": "metrics",
+                                            "containerPort": 6001,
+                                            "protocol": "TCP"
+                                        }
+                                    ],
+                                    "resources": {},
+                                    "volumeMounts": [
+                                        {
+                                            "name": "seldon-podinfo",
+                                            "mountPath": "/etc/podinfo"
+                                        }
+                                    ]
                                 }
                             ]
                         }
@@ -78,8 +149,11 @@
                 ],
                 "replicas": 1,
                 "engineResources": {},
+                "labels": {
+                    "version": "default"
+                },
                 "svcOrchSpec": {},
-                "traffic": 30
+                "traffic": 100
             }
         ],
         "annotations": {
