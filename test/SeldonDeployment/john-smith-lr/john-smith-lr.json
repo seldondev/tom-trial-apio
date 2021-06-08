@@ -13,6 +13,48 @@
         "name": "john-smith-lr",
         "predictors": [
             {
+                "name": "default",
+                "graph": {
+                    "name": "john-smith-lr-container",
+                    "implementation": "SKLEARN_SERVER",
+                    "endpoint": {
+                        "type": "REST"
+                    },
+                    "modelUri": "gs://tom-seldon-examples/deploy-workshop/john-smith/lr",
+                    "logger": {
+                        "mode": "all"
+                    }
+                },
+                "componentSpecs": [
+                    {
+                        "metadata": {
+                            "creationTimestamp": "2021-06-08T07:46:20Z"
+                        },
+                        "spec": {
+                            "containers": [
+                                {
+                                    "name": "john-smith-lr-container",
+                                    "resources": {
+                                        "limits": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        },
+                                        "requests": {
+                                            "cpu": "1",
+                                            "memory": "1Gi"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "engineResources": {},
+                "svcOrchSpec": {},
+                "traffic": 60
+            },
+            {
                 "name": "canary",
                 "graph": {
                     "name": "john-smith-xgb-container",
@@ -22,7 +64,7 @@
                 "componentSpecs": [
                     {
                         "metadata": {
-                            "creationTimestamp": "2021-06-07T21:01:16Z"
+                            "creationTimestamp": "2021-06-08T07:46:20Z"
                         },
                         "spec": {
                             "containers": [
@@ -37,7 +79,7 @@
                 "replicas": 1,
                 "engineResources": {},
                 "svcOrchSpec": {},
-                "traffic": 100
+                "traffic": 40
             }
         ],
         "annotations": {
